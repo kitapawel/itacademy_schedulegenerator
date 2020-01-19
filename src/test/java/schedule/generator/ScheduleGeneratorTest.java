@@ -130,10 +130,9 @@ public class ScheduleGeneratorTest {
                 .build();
 
         //when
-        //IScheduleGenerator scheduleGenerator = new ScheduleGenerator(new HolidayCheckerMock());
-        //Schedule schedule = scheduleGenerator.generateSchedule(enteredParameters);
-        IScheduleGenerator scheduleGenerator = new ScheduleGenerator(new CalendarificHolidayChecker());
+        IScheduleGenerator scheduleGenerator = new ScheduleGenerator(new HolidayCheckerMock());
         Schedule schedule = scheduleGenerator.generateSchedule(enteredParameters);
+
 
         //then
         Lesson lesson1 = new Lesson(LocalDate.of(2020, 1, 8), beginTime, endTime);

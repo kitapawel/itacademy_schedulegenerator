@@ -38,7 +38,7 @@ public class ScheduleGenerator implements IScheduleGenerator {
         Collection<LocalDate> holidays = holidayChecker.getHolidays(currentDate, LocalDate.of(2020,12,31));
 
         do {
-            while (!lessonDays.contains(currentDate.getDayOfWeek()) || holidays.contains(currentDate.getDayOfWeek())) {
+            while (!lessonDays.contains(currentDate.getDayOfWeek())|| holidays.contains(currentDate)) {
                 currentDate = currentDate.plusDays(1);
             }
             Lesson lesson = new Lesson(currentDate, beginTime, endTime);
