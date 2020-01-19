@@ -1,12 +1,15 @@
 package schedule.generator;
 
+import schedule.holidays.CalendarificHolidayChecker;
 import schedule.holidays.HolidayChecker;
+import schedule.holidays.HolidaysCheckerFactory;
 import schedule.parameters.EnteredParameters;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -30,8 +33,12 @@ public class ScheduleGenerator implements IScheduleGenerator {
         long usedHours = 0;
         LocalDate currentDate = enteredParameters.getStartDate();
         List<Lesson> lessons = new ArrayList<>();
+
+        HolidayChecker holidayChecker = new CalendarificHolidayChecker();
+        Collection<LocalDate> holidays = holidayChecker.getHolidays(currentDate, LocalDate.of(2020,12,31));
+
         do {
-            while (!lessonDays.contains(currentDate.getDayOfWeek())) {
+            while (!lessonDays.contains(currentDate.getDayOfWeek()) || holidays.contains(currentDate.getDayOfWeek())) {
                 currentDate = currentDate.plusDays(1);
             }
             Lesson lesson = new Lesson(currentDate, beginTime, endTime);
@@ -47,5 +54,4 @@ public class ScheduleGenerator implements IScheduleGenerator {
         boolean isSuccessful = usedHours == requiredHours;
         return new Schedule(lessons, isSuccessful);
     }
-
 }

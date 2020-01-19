@@ -1,9 +1,11 @@
 package schedule.generator;
 
 import org.junit.jupiter.api.Test;
+import schedule.holidays.CalendarificHolidayChecker;
 import schedule.holidays.DefaultHolidayChecker;
 import schedule.holidays.HolidayChecker;
 import schedule.parameters.EnteredParameters;
+
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -128,7 +130,9 @@ public class ScheduleGeneratorTest {
                 .build();
 
         //when
-        IScheduleGenerator scheduleGenerator = new ScheduleGenerator(new HolidayCheckerMock());
+        //IScheduleGenerator scheduleGenerator = new ScheduleGenerator(new HolidayCheckerMock());
+        //Schedule schedule = scheduleGenerator.generateSchedule(enteredParameters);
+        IScheduleGenerator scheduleGenerator = new ScheduleGenerator(new CalendarificHolidayChecker());
         Schedule schedule = scheduleGenerator.generateSchedule(enteredParameters);
 
         //then

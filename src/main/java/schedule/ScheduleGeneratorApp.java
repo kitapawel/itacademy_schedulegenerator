@@ -22,7 +22,10 @@ public class ScheduleGeneratorApp {
         Lesson lesson1 = new Lesson(LocalDate.of(2020, 1, 1), beginTime, endTime);
         Lesson lesson2 = new Lesson(LocalDate.of(2020, 1, 6), beginTime, endTime);
         Lesson lesson3 = new Lesson(LocalDate.of(2020, 1, 8), beginTime, endTime);
-        Schedule schedule = new Schedule(List.of(lesson1, lesson2, lesson3), true);
+        Lesson lesson4 = new Lesson(LocalDate.of(2020, 1, 9), beginTime, endTime);
+        Lesson lesson5 = new Lesson(LocalDate.of(2020, 1, 11), beginTime, endTime);
+        Lesson lesson6 = new Lesson(LocalDate.of(2020, 1, 12), beginTime, endTime);
+        Schedule schedule = new Schedule(List.of(lesson1, lesson2, lesson3, lesson4,lesson5,lesson6), true);
 
         WorkbookCreator workbookCreator = new WorkbookCreator();
         Workbook workbook = workbookCreator.createWorkbook(schedule);
