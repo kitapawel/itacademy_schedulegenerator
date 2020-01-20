@@ -34,8 +34,6 @@ public class ScheduleGenerator implements IScheduleGenerator {
         LocalDate currentDate = enteredParameters.getStartDate();
         List<Lesson> lessons = new ArrayList<>();
 
-        HolidaysCheckerFactory holidaysCheckerFactory = new HolidaysCheckerFactory();
-        HolidayChecker holidayChecker = holidaysCheckerFactory.createHolidaysChecker("calendarific");
         Collection<LocalDate> holidays = holidayChecker.getHolidays(currentDate, LocalDate.of(2020,12,31));
 
         do {
