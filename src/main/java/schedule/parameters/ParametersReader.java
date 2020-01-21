@@ -9,15 +9,22 @@ import java.util.EnumSet;
 
 public class ParametersReader {
     public EnteredParameters readParameters(String[] args) throws ParseException {
+
+        int requiredHours = 0;
+
         Options options = new Options();
         options.addOption("n", true, "required number of hours");
 
         CommandLineParser parser = new DefaultParser();
-        CommandLine cmd = parser.parse(options, args);
 
-        int requiredHours = 0;
-        if(cmd.hasOption("n")) {
-            requiredHours = Integer.parseInt(cmd.getOptionValue("n"));
+        try {
+            CommandLine commandLine = parser.parse(options, args);
+
+            if (commandLine.hasOption("n")) {
+                requiredHours = Integer.parseInt(commandLine.getOptionValue("n"));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
         EnteredParameters readParameters = new EnteredParameters.Builder(LocalTime.of(10, 0), LocalTime.of(12, 0), requiredHours)

@@ -86,5 +86,15 @@ public class EnteredParameters {
 
     }
 
-
+    @Override
+    public String toString() {
+        return "EnteredParameters{" +
+                "lessonDays=" + lessonDays +
+                ", beginTime=" + beginTime +
+                ", endTime=" + endTime +
+                ", requiredHours=" + requiredHours +
+                ", startDate=" + startDate +
+                ", fileName='" + fileName + '\'' +
+                '}';
+    }
 }

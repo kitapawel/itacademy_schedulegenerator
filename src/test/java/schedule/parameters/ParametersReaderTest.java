@@ -1,5 +1,6 @@
 package schedule.parameters;
 
+import org.apache.commons.cli.ParseException;
 import org.junit.jupiter.api.Test;
 import schedule.generator.IScheduleGenerator;
 import schedule.generator.Lesson;
@@ -23,7 +24,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class ParametersReaderTest {
     @Test
-    void readParameters_AbleToParseEmptyParameterForRequiredHours() {
+    void readParameters_AbleToParseEmptyParameterForRequiredHours() throws ParseException {
         //given
         LocalTime beginTime = LocalTime.of(10, 0);
         LocalTime endTime = LocalTime.of(12, 0);
@@ -36,10 +37,10 @@ public class ParametersReaderTest {
 
         //when
         ParametersReader parametersReader = new ParametersReader();
-        EnteredParameters testedEnteredParameters = parametersReader.readParameters();
-        int testedRequiredHours = testedEnteredParameters.getRequiredHours();
+        EnteredParameters testedEnteredParameters = parametersReader.readParameters(new String[] {"1"});
+        System.out.println(testedEnteredParameters);
 
         //then
-        assertThat(expectedEnteredParameters.getRequiredHours(), equalTo(testedRequiredHours));
+        assertThat(expectedEnteredParameters.getRequiredHours(), equalTo(testedEnteredParameters.getRequiredHours()));
     }
 }
