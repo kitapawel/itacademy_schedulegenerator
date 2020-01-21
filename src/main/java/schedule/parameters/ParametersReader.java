@@ -2,6 +2,11 @@ package schedule.parameters;
 
 import org.apache.commons.cli.*;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.EnumSet;
+
 public class ParametersReader {
     public EnteredParameters readParameters(String[] args) throws ParseException {
         Options options = new Options();
@@ -15,7 +20,11 @@ public class ParametersReader {
             requiredHours = Integer.parseInt(cmd.getOptionValue("n"));
         }
 
-        return null;
+        EnteredParameters readParameters = new EnteredParameters.Builder(LocalTime.of(10, 0), LocalTime.of(12, 0), requiredHours)
+                .withLessonDays(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY))
+                .withStartDate(LocalDate.of(2020, 1, 1))
+                .build();
+        return readParameters;
     }
 
 }

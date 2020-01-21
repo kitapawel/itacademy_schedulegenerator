@@ -36,9 +36,10 @@ public class ParametersReaderTest {
 
         //when
         ParametersReader parametersReader = new ParametersReader();
-        int testedRequiredHours = parametersReader.readParameters(new String[]{});
+        EnteredParameters testedEnteredParameters = parametersReader.readParameters();
+        int testedRequiredHours = testedEnteredParameters.getRequiredHours();
 
         //then
-        assertThat(expectedEnteredParameters.getRequiredHours(), equalTo(testedRequiredHours);
+        assertThat(expectedEnteredParameters.getRequiredHours(), equalTo(testedRequiredHours));
     }
 }
