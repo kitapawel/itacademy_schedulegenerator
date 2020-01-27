@@ -14,7 +14,7 @@ public class ParametersReader {
     public EnteredParameters readParameters(String[] args) throws ParseException {
 
         int requiredHours = 0;
-        Set<DayOfWeek> lessonDays = null;
+        EnumSet<DayOfWeek> lessonDays = EnumSet.noneOf(DayOfWeek.class);
         LocalDate startDate = null;
         LocalTime beginTime = null;
         LocalTime endTime = null;
@@ -26,7 +26,7 @@ public class ParametersReader {
         options.addOption("s", true, "start date of the course, e.g. 31-01-2018, DD-MM-YYYY");
         options.addOption("b", true, "beginning time of a lesson, e.g. 9:00, H:MM");
         options.addOption("e", true, "end time of a lesson, e.g. 12:00, H:MM");
-        options.addOption("d", true, "days of week when lessons can take place");
+        options.addOption("d", true, "days of week when lessons can take place, separated by space");
 
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp( "help", options );
@@ -77,13 +77,18 @@ public class ParametersReader {
 
 
 
-//            if (commandLine.hasOption("d")) {
-//            lessonDays.add(DayOfWeek.valueOf(commandLine.getOptionValue("d")));
-//            }
+            if (commandLine.hasOption("d")) {
+                String cmdLineInput = commandLine.getOptionValue("d");
+                String[] daysOfWeek = cmdLineInput.split(" ");
+                for (String s : daysOfWeek){
+                    String weekDay = s.toUpperCase();
+                    lessonDays.add(DayOfWeek.valueOf(weekDay));
+                }
+            }
 
 
         EnteredParameters readParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours)
-                .withLessonDays(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY))
+                .withLessonDays(lessonDays)
                 .withFileName(fileName)
                 .withStartDate(startDate)
                 .build();

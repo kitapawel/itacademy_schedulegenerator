@@ -78,15 +78,15 @@ public class ParametersReaderTest {
         assertThat(result.getEndTime(), equalTo(LocalTime.of(12,00)));
     }
 
-//    @Test
-//    public  void readParameters_containsNReturnsEnteredParametersWithDaysOfWeek() throws ParseException {
-//        //given
-//        ParametersReader parametersReader = new ParametersReader();
-//        String[] args = {"-d", "MONDAY"};
-//        //when
-//        EnteredParameters result = parametersReader.readParameters(args);
-//        result.getLessonDays();
-//        //then
-//        assertThat(result.getLessonDays(), equalTo(DayOfWeek.MONDAY));
-//    }
+    @Test
+    public  void readParameters_containsNReturnsEnteredParametersWithDaysOfWeek() throws ParseException {
+        //given
+        ParametersReader parametersReader = new ParametersReader();
+        String[] args = {"-d", "FRIday monday"};
+        //when
+        EnteredParameters result = parametersReader.readParameters(args);
+        result.getLessonDays();
+        //then
+        assertThat(result.getLessonDays(), equalTo(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY)));
+    }
 }
