@@ -24,23 +24,69 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class ParametersReaderTest {
     @Test
-    void readParameters_AbleToParseEmptyParameterForRequiredHours() throws ParseException {
+    public  void readParameters_containsNReturnsEnteredParametersWithRequiredNumberOfHours() throws ParseException {
         //given
-        LocalTime beginTime = LocalTime.of(10, 0);
-        LocalTime endTime = LocalTime.of(12, 0);
-        int requiredHours = 0;
-        LocalDate startDate = LocalDate.of(2020, 1, 1);
-        EnteredParameters expectedEnteredParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours)
-                .withLessonDays(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY))
-                .withStartDate(startDate)
-                .build();
-
-        //when
         ParametersReader parametersReader = new ParametersReader();
-        EnteredParameters testedEnteredParameters = parametersReader.readParameters(new String[] {"1"});
-        System.out.println(testedEnteredParameters);
-
+        String[] args = {"-n", "42"};
+        //when
+        EnteredParameters result = parametersReader.readParameters(args);
         //then
-        assertThat(expectedEnteredParameters.getRequiredHours(), equalTo(testedEnteredParameters.getRequiredHours()));
+        assertThat(result.getRequiredHours(), equalTo(42));
     }
+
+    @Test
+    public  void readParameters_containsNReturnsEnteredParametersWithFileName() throws ParseException {
+        //given
+        ParametersReader parametersReader = new ParametersReader();
+        String[] args = {"-f", "exampleschedule.xlsx"};
+        //when
+        EnteredParameters result = parametersReader.readParameters(args);
+        //then
+        assertThat(result.getFileName(), equalTo("exampleschedule.xlsx"));
+    }
+
+    @Test
+    public  void readParameters_containsNReturnsEnteredParametersWithStartDate() throws ParseException {
+        //given
+        ParametersReader parametersReader = new ParametersReader();
+        String[] args = {"-s", "30-05-2019"};
+        //when
+        EnteredParameters result = parametersReader.readParameters(args);
+        //then
+        assertThat(result.getStartDate(), equalTo(LocalDate.of(2019,05,30)));
+    }
+
+    @Test
+    public  void readParameters_containsNReturnsEnteredParametersWithLessonBeginTime() throws ParseException {
+        //given
+        ParametersReader parametersReader = new ParametersReader();
+        String[] args = {"-b", "9:00"};
+        //when
+        EnteredParameters result = parametersReader.readParameters(args);
+        //then
+        assertThat(result.getBeginTime(), equalTo(LocalTime.of(9,00)));
+    }
+
+    @Test
+    public  void readParameters_containsNReturnsEnteredParametersWithLessonEndTime() throws ParseException {
+        //given
+        ParametersReader parametersReader = new ParametersReader();
+        String[] args = {"-e", "12:00"};
+        //when
+        EnteredParameters result = parametersReader.readParameters(args);
+        //then
+        assertThat(result.getEndTime(), equalTo(LocalTime.of(12,00)));
+    }
+
+//    @Test
+//    public  void readParameters_containsNReturnsEnteredParametersWithDaysOfWeek() throws ParseException {
+//        //given
+//        ParametersReader parametersReader = new ParametersReader();
+//        String[] args = {"-d", "MONDAY"};
+//        //when
+//        EnteredParameters result = parametersReader.readParameters(args);
+//        result.getLessonDays();
+//        //then
+//        assertThat(result.getLessonDays(), equalTo(DayOfWeek.MONDAY));
+//    }
 }
