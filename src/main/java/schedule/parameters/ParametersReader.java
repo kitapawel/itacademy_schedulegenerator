@@ -29,7 +29,7 @@ public class ParametersReader {
         options.addOption("d", true, "days of week when lessons can take place, separated by space");
 
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp( "help", options );
+        formatter.printHelp( "-h", options );
 
         CommandLineParser parser = new DefaultParser();
         CommandLine commandLine = parser.parse(options, args);
