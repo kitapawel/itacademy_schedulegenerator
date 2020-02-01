@@ -82,7 +82,7 @@ public class ParametersReaderTest {
     public  void readParameters_containsNReturnsEnteredParametersWithDaysOfWeek() throws ParseException {
         //given
         ParametersReader parametersReader = new ParametersReader();
-        String[] args = {"-d", "FRIday monday"};
+        String[] args = {"-d", "FRIday_monday"};
         //when
         EnteredParameters result = parametersReader.readParameters(args);
         result.getLessonDays();

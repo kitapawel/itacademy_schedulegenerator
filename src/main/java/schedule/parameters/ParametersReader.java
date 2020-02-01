@@ -1,10 +1,15 @@
 package schedule.parameters;
 
 import org.apache.commons.cli.*;
+import schedule.util.PropertiesReader;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -20,13 +25,18 @@ public class ParametersReader {
         LocalTime endTime = null;
         String fileName = "schedule.xlsx";
 
+        PropertiesReader propertiesReader = PropertiesReader.getInstance();
+        String timeFormat = propertiesReader.readProperty("application.timeFormat");
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern(timeFormat);
+
+
         Options options = new Options();
         options.addOption("n", true, "required number of hours");
         options.addOption("f", true, "name of the created file");
         options.addOption("s", true, "start date of the course, e.g. 31-01-2018, DD-MM-YYYY");
         options.addOption("b", true, "beginning time of a lesson, e.g. 9:00, H:MM");
         options.addOption("e", true, "end time of a lesson, e.g. 12:00, H:MM");
-        options.addOption("d", true, "days of week when lessons can take place, separated by space");
+        options.addOption("d", true, "days of week when lessons can take place, separated by underscore sign (_)");
 
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp( "-h", options );
@@ -59,11 +69,14 @@ public class ParametersReader {
 
             if (commandLine.hasOption("b")) {
                 String cmdLineInput = commandLine.getOptionValue("b");
-                String[] timeComponents = cmdLineInput.split(":");
-                int hour = Integer.parseInt(timeComponents[0]);
-                int minute = Integer.parseInt(timeComponents[1]);
-
-                beginTime = LocalTime.of(hour,minute);
+//                String[] timeComponents = cmdLineInput.split(":");
+//                int hour = Integer.parseInt(timeComponents[0]);
+//                int minute = Integer.parseInt(timeComponents[1]);
+//
+//                beginTime = LocalTime.of(hour,minute);
+                System.out.println(beginTime);
+                beginTime = LocalTime.parse("9:00:00", fmt);
+                System.out.println(beginTime);
             }
 
             if (commandLine.hasOption("e")) {
@@ -79,7 +92,7 @@ public class ParametersReader {
 
             if (commandLine.hasOption("d")) {
                 String cmdLineInput = commandLine.getOptionValue("d");
-                String[] daysOfWeek = cmdLineInput.split(" ");
+                String[] daysOfWeek = cmdLineInput.split("_");
                 for (String s : daysOfWeek){
                     String weekDay = s.toUpperCase();
                     lessonDays.add(DayOfWeek.valueOf(weekDay));
