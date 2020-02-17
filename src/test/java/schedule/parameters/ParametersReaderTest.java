@@ -12,6 +12,7 @@ import schedule.holidays.HolidayChecker;
 import schedule.parameters.EnteredParameters;
 
 
+import java.io.PrintStream;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -34,6 +35,7 @@ public class ParametersReaderTest {
         assertThat(result.getRequiredHours(), equalTo(42));
     }
 
+
     @Test
     public  void readParameters_containsNReturnsEnteredParametersWithFileName() throws ParseException {
         //given
@@ -49,7 +51,7 @@ public class ParametersReaderTest {
     public  void readParameters_containsNReturnsEnteredParametersWithStartDate() throws ParseException {
         //given
         ParametersReader parametersReader = new ParametersReader();
-        String[] args = {"-s", "30-05-2019"};
+        String[] args = {"-s", "30.05.2019"};
         //when
         EnteredParameters result = parametersReader.readParameters(args);
         //then
