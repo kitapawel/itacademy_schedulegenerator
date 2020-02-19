@@ -48,6 +48,7 @@ public class ParametersReader {
 
             if (commandLine.hasOption("h")) {
                 formatter.printHelp( "-h", options );
+                return null;
             }
 
             if (commandLine.hasOption("n")) {
@@ -55,45 +56,23 @@ public class ParametersReader {
             }
 
             if (commandLine.hasOption("f")) {
-            fileName = commandLine.getOptionValue("f");
+                fileName = commandLine.getOptionValue("f");
             }
 
             if (commandLine.hasOption("s")) {
                 String cmdLineInput = commandLine.getOptionValue("s");
-//                System.out.println(cmdLineInput);//testing code to see input is accepted
-//                String[] dateComponents = cmdLineInput.split("-");
-//                for (String s : dateComponents) {
-//                    System.out.println(s);//test code to see input code is processed
-//                }
-//                int day = Integer.parseInt(dateComponents[0]);
-//                int month = Integer.parseInt(dateComponents[1]);
-//                int year = Integer.parseInt(dateComponents[2]);
-
-
                 startDate = LocalDate.parse(cmdLineInput, dateFormatter);
             }
 
             if (commandLine.hasOption("b")) {
                 String cmdLineInput = commandLine.getOptionValue("b");
-//                String[] timeComponents = cmdLineInput.split(":");
-//                int hour = Integer.parseInt(timeComponents[0]);
-//                int minute = Integer.parseInt(timeComponents[1]);
-//
-//                beginTime = LocalTime.of(hour,minute);
                 beginTime = LocalTime.parse(cmdLineInput, timeFormatter);
-
             }
 
             if (commandLine.hasOption("e")) {
                 String cmdLineInput = commandLine.getOptionValue("e");
-//                String[] timeComponents = cmdLineInput.split(":");
-//                int hour = Integer.parseInt(timeComponents[0]);
-//                int minute = Integer.parseInt(timeComponents[1]);
-
                 endTime = LocalTime.parse(cmdLineInput, timeFormatter);
             }
-
-
 
             if (commandLine.hasOption("d")) {
                 String cmdLineInput = commandLine.getOptionValue("d");
@@ -103,7 +82,6 @@ public class ParametersReader {
                     lessonDays.add(DayOfWeek.valueOf(weekDay));
                 }
             }
-
 
         EnteredParameters readParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours)
                 .withLessonDays(lessonDays)
