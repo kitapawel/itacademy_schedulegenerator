@@ -24,14 +24,18 @@ public class ScheduleGeneratorApp {
 //        System.out.println(propertiesReader.readProperty("excel.defaultName"));
 
         ParametersReader parametersReader = new ParametersReader();
+        EnteredParameters enteredParameters = parametersReader.readParameters(args);
 
         if (args.length == 0){
             System.out.println("Welcome to the Schedule Generator application. It appears you have not provided any arguments.");
-            System.out.println("To learn more about the available parameters run the application with the following command:");
-            System.out.println("java ScheduleGeneratorApp -h");
+            System.out.println("Example arguments to generate a schedule: -n=5 -b=9:00 -e=10:00 -s=1.03.2021 -d=tuesday_friday -f=sheduletest.xlsx");
+            System.out.println("To learn more about the available arguments run the application with the following argument:");
+            System.out.println("-h");
+        }
+        else if (enteredParameters == null) {
+            return;
         }
         else {
-            EnteredParameters enteredParameters = parametersReader.readParameters(args);
             IScheduleGenerator scheduleGenerator = new ScheduleGenerator(new CalendarificHolidayChecker());
             Schedule schedule = scheduleGenerator.generateSchedule(enteredParameters);
 
@@ -41,6 +45,5 @@ public class ScheduleGeneratorApp {
             workbook.write(fos);
             workbook.close();
         }
-
     }
 }
