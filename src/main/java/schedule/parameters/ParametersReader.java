@@ -16,7 +16,20 @@ import java.util.EnumSet;
 import java.util.Set;
 
 public class ParametersReader {
-    public EnteredParameters readParameters(String[] args) throws ParseException {
+
+    private final PropertiesReader propertiesReader = PropertiesReader.getInstance();
+    private Options options;
+
+    public ParametersReader() {
+        options = new Options();
+        options.addOption("h", false, "print application help");
+        options.addOption("n", true, "required number of hours");
+        options.addOption("f", true, "name of the created file");
+        options.addOption("s", true, "start date of the course, e.g. 31.01.2018, DD-MM-YYYY");
+        options.addOption("b", true, "beginning time of a lesson, e.g. 9:00, H:MM");
+        options.addOption("e", true, "end time of a lesson, e.g. 12:00, H:MM");
+        options.addOption("d", true, "days of week when lessons can take place, separated by underscore sign (_)");
+    }
 
         int requiredHours = 0;
         EnumSet<DayOfWeek> lessonDays = EnumSet.noneOf(DayOfWeek.class);
@@ -25,31 +38,15 @@ public class ParametersReader {
         LocalTime endTime = null;
         String fileName = "schedule.xlsx";
 
-        PropertiesReader propertiesReader = PropertiesReader.getInstance();
         String timeFormat = propertiesReader.readProperty("application.timeFormat");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(timeFormat);
         String dateFormat = propertiesReader.readProperty("application.dateFormat");
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormat);
 
-
-        Options options = new Options();
-        options.addOption("h", false, "print application help");
-        options.addOption("n", true, "required number of hours");
-        options.addOption("f", true, "name of the created file");
-        options.addOption("s", true, "start date of the course, e.g. 31.01.2018, DD-MM-YYYY");
-        options.addOption("b", true, "beginning time of a lesson, e.g. 9:00, H:MM");
-        options.addOption("e", true, "end time of a lesson, e.g. 12:00, H:MM");
-        options.addOption("d", true, "days of week when lessons can take place, separated by underscore sign (_)");
-
-        HelpFormatter formatter = new HelpFormatter();
+    public EnteredParameters readParameters (String[] args) throws ParseException {
 
         CommandLineParser parser = new DefaultParser();
         CommandLine commandLine = parser.parse(options, args);
-
-            if (commandLine.hasOption("h")) {
-                formatter.printHelp( "-h", options );
-                return null;
-            }
 
             if (commandLine.hasOption("n")) {
                 requiredHours = Integer.parseInt(commandLine.getOptionValue("n"));
@@ -58,6 +55,8 @@ public class ParametersReader {
             if (commandLine.hasOption("f")) {
                 fileName = commandLine.getOptionValue("f");
             }
+
+            boolean showHelp = commandLine.hasOption("h");
 
             if (commandLine.hasOption("s")) {
                 String cmdLineInput = commandLine.getOptionValue("s");
@@ -83,13 +82,13 @@ public class ParametersReader {
                 }
             }
 
-        EnteredParameters readParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours)
-                .withLessonDays(lessonDays)
-                .withFileName(fileName)
-                .withStartDate(startDate)
-                .build();
-        System.out.println(readParameters);
-        return readParameters;
+        return new EnteredParameters.Builder(beginTime, endTime, requiredHours, lessonDays, startDate).fileName(fileName)
+                .showHelp(showHelp).build();
+    }
+
+    public void showHelp() {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("java -cp schedule-generator.jar schedulegenerator.ScheduleGeneratorApp -d monday_thursday -b 17:00 -e 18:30 -n 21 -s 30.05.2019 -f example1", options);
     }
 
 }

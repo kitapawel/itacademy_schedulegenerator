@@ -26,11 +26,9 @@ public class ScheduleGeneratorTest {
         LocalTime endTime = LocalTime.of(12, 0);
         int requiredHours = 4;
         LocalDate startDate = LocalDate.of(2020, 1, 1);
-        EnteredParameters enteredParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours)
-                .withLessonDays(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY))
-                .withStartDate(startDate)
-                .build();
-
+        EnumSet<DayOfWeek> lessonDays = EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
+        EnteredParameters enteredParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours, lessonDays, startDate)
+                   .build();
         //when
         IScheduleGenerator scheduleGenerator = new ScheduleGenerator(new DefaultHolidayChecker());
         Schedule schedule = scheduleGenerator.generateSchedule(enteredParameters);
@@ -49,10 +47,9 @@ public class ScheduleGeneratorTest {
         LocalTime beginTime = LocalTime.of(10, 0);
         LocalTime endTime = LocalTime.of(12, 0);
         int requiredHours = 5;
+        EnumSet<DayOfWeek> lessonDays = EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
         LocalDate startDate = LocalDate.of(2020, 1, 1);
-        EnteredParameters enteredParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours)
-                .withLessonDays(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY))
-                .withStartDate(startDate)
+        EnteredParameters enteredParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours, lessonDays, startDate)
                 .build();
 
         //when
@@ -74,10 +71,9 @@ public class ScheduleGeneratorTest {
         LocalTime beginTime = LocalTime.of(10, 0);
         LocalTime endTime = LocalTime.of(11, 30);
         int requiredHours = 3;
+        EnumSet<DayOfWeek> lessonDays = EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
         LocalDate startDate = LocalDate.of(2020, 1, 1);
-        EnteredParameters enteredParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours)
-                .withLessonDays(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY))
-                .withStartDate(startDate)
+        EnteredParameters enteredParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours, lessonDays, startDate)
                 .build();
 
         //when
@@ -98,10 +94,9 @@ public class ScheduleGeneratorTest {
         LocalTime beginTime = LocalTime.of(10, 0);
         LocalTime endTime = LocalTime.of(11, 30);
         int requiredHours = 4;
+        EnumSet<DayOfWeek> lessonDays = EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
         LocalDate startDate = LocalDate.of(2020, 1, 1);
-        EnteredParameters enteredParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours)
-                .withLessonDays(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY))
-                .withStartDate(startDate)
+        EnteredParameters enteredParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours, lessonDays, startDate)
                 .build();
 
         //when
@@ -123,10 +118,9 @@ public class ScheduleGeneratorTest {
         LocalTime beginTime = LocalTime.of(10, 0);
         LocalTime endTime = LocalTime.of(12, 0);
         int requiredHours = 4;
+        EnumSet<DayOfWeek> lessonDays = EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
         LocalDate startDate = LocalDate.of(2020, 1, 1);
-        EnteredParameters enteredParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours)
-                .withLessonDays(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY))
-                .withStartDate(startDate)
+        EnteredParameters enteredParameters = new EnteredParameters.Builder(beginTime, endTime, requiredHours, lessonDays, startDate)
                 .build();
 
         //when

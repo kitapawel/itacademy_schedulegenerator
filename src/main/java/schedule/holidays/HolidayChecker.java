@@ -1,9 +1,8 @@
 package schedule.holidays;
 
 import java.time.LocalDate;
-import java.util.Collection;
+import java.util.List;
 
 public interface HolidayChecker {
-    Collection<LocalDate> getHolidays(LocalDate startDate, LocalDate endDate);
-
+    List<LocalDate> getHolidays(int year);
 }
